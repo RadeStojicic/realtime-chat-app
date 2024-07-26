@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A realtime chat app server.",
+  "main": "index.js",
+  "scripts": {
+    "build": "pnpm --package=typescript dlx tsc",
+    "start": "node dist/index.js",
+    "dev": "concurrently \"pnpm tsc -w\"  \"nodemon dist/index.js\""
+  },
+  "keywords": [
+    "server"
+  ],
+  "author": "Rade Stojičić",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.12",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.4",
+    "typescript": "^5.2.2"
+  }
+}
