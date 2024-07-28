@@ -1,8 +1,13 @@
 import { useToast } from "@/components/ui/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import AuthForm, { ContactSchema } from "./_components/AuthForm";
+import AuthForm from "./_components/AuthForm";
+
+type SignUpForm = {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const SignUp = () => {
   const { toast } = useToast();
@@ -10,13 +15,15 @@ const SignUp = () => {
     text: "Already have an account? ",
     href: "/log-in",
   };
-  const form = useForm<z.infer<typeof ContactSchema>>({
-    resolver: zodResolver(ContactSchema),
+  const form = useForm<SignUpForm>({
     defaultValues: {
+      username: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
+
   async function onSubmit() {
     form.reset();
     toast({

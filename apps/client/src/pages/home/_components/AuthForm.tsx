@@ -11,16 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/toaster";
 import { UseFormReturn } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { z } from "zod";
-
-export const ContactSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-});
 
 const AuthForm = ({
   form,
@@ -36,52 +26,101 @@ const AuthForm = ({
     href: string;
   };
 }) => {
+  const fields = Object.keys(form.getValues());
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full sm:w-[400px] mt-8 max-w-2xl flex-col"
       >
-        <div className="flex flex-col gap-6">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="space-y-[6px]">
-                <FormLabel className="text-sm font-medium text-white">
-                  Email
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    className="py-6 border-none bg-foreground text-white"
-                    placeholder="you@example.com"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="space-y-[6px]">
-                <FormLabel className="text-sm font-medium text-white">
-                  Password
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    className="py-6 border-none bg-foreground text-white"
-                    placeholder="At least 8 characters"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="flex flex-col gap-5">
+          {fields.includes("username") && (
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem className="space-y-[5px]">
+                  <FormLabel className="text-sm font-medium text-white">
+                    Username
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="py-6 border-none bg-foreground text-white"
+                      placeholder="Type your username..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          {fields.includes("email") && (
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="space-y-[5px]">
+                  <FormLabel className="text-sm font-medium text-white">
+                    Email
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="py-6 border-none bg-foreground text-white"
+                      placeholder="you@example.com"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          {fields.includes("password") && (
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="space-y-[5px]">
+                  <FormLabel className="text-sm font-medium text-white">
+                    Password
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      className="py-6 border-none bg-foreground text-white"
+                      placeholder="At least 8 characters"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          {fields.includes("confirmPassword") && (
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem className="space-y-[5px]">
+                  <FormLabel className="text-sm font-medium text-white">
+                    Confirm Password
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      className="py-6 border-none bg-foreground text-white"
+                      placeholder="Re-enter your password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
         </div>
         <Button type="submit" variant="default" size="lg" className="mt-6 py-6">
           {btnText}
