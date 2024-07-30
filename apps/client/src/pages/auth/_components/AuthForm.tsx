@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/toaster";
+import { LoaderCircle } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { Link } from "react-router-dom";
 
@@ -17,6 +18,7 @@ const AuthForm = ({
   onSubmit,
   btnText,
   orOption,
+  loading,
 }: {
   form: UseFormReturn<any>;
   onSubmit: () => void;
@@ -25,6 +27,7 @@ const AuthForm = ({
     text: string;
     href: string;
   };
+  loading: boolean;
 }) => {
   const fields = Object.keys(form.getValues());
 
@@ -122,9 +125,25 @@ const AuthForm = ({
             />
           )}
         </div>
-        <Button type="submit" variant="default" size="lg" className="mt-6 py-6">
-          {btnText}
-        </Button>
+        {loading ? (
+          <Button
+            size="lg"
+            className="mt-6 py-6 flex items-center justify-center "
+            disabled
+          >
+            <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+            Please wait
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            variant="default"
+            size="lg"
+            className="mt-6 py-6"
+          >
+            {btnText}
+          </Button>
+        )}
         <div className="my-6 flex w-full items-center text-center text-accent">
           <div className="flex-1 border-b border-foreground"></div>
           <p className="mx-2 text-sm">Or</p>

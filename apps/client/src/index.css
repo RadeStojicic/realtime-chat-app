@@ -38,7 +38,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-gradient-to-b from-darkerBackground to-background text-foreground;
+    @apply bg-background text-white;
   }
 }
 
@@ -55,4 +55,23 @@ select:-webkit-autofill:focus {
   box-shadow: 0 0 0px 1000px #ffffff13 inset;
   transition: background-color 5000s ease-in-out 0s;
   color: white;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: #1f1f1f;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #49494a;
+  border-radius: 100vh;
+  border: 1px solid #49494a;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555556;
 }
