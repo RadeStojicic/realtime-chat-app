@@ -1,4 +1,6 @@
 import useGetMessages from "@/hooks/use-getMessages";
+import useListenMessages from "@/hooks/use-listenMessages";
+import { useEffect, useRef } from "react";
 import Message from "./Message";
 
 export type TMessage = {
@@ -11,24 +13,27 @@ export type TMessage = {
 };
 
 const Messages = () => {
-  const { messages } = useGetMessages();
+  const { messages, loading } = useGetMessages();
+  useListenMessages();
 
-  //   useListenMessages();
-  //   const lastMessageRef = useRef();
+  const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
-  //   useEffect(() => {
-  //     setTimeout(() => {
-  //       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  //     }, 100);
-  //   }, [messages]);
+  useEffect(() => {
+    setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 80);
+  }, [messages]);
 
   return (
     <div className="px-4 flex-1 overflow-auto  scrollbar">
-      {messages.length > 0 &&
+      {!loading &&
+        messages.length > 0 &&
         messages.map((message, index) => (
-          <Message key={index} message={message} />
+          <div key={index} ref={lastMessageRef}>
+            <Message message={message} />
+          </div>
         ))}
-      {messages.length === 0 && (
+      {loading && messages.length === 0 && (
         <div className="flex items-center justify-center h-full">
           <p className="text-white">Send a message to start a conversation.</p>
         </div>

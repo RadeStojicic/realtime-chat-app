@@ -2,19 +2,36 @@ import { useAuthContext } from "@/context/AuthContext";
 import useConversation from "@/store/useConversation";
 import { TMessage } from "./Messages";
 
-const Message = ({ message }: { message: TMessage }) => {
+type TNewMessage = {
+  newMessage: TMessage;
+};
+
+type MessageType = TMessage | TNewMessage;
+
+const Message = ({ message }: { message: MessageType }) => {
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
-  const fromMe = message.senderId === authUser?._id;
-  const formattedDate = new Date(message.createdAt).toLocaleString("en-US", {
+
+  const fromMe =
+    "newMessage" in message
+      ? message.newMessage.senderId === authUser?._id
+      : message.senderId === authUser?._id;
+
+  const formattedDate = new Date(
+    "newMessage" in message ? message.newMessage.createdAt : message.createdAt
+  ).toLocaleString("en-US", {
     hour: "numeric",
     minute: "numeric",
     hour12: true,
   });
+
   const profilePic = fromMe
-    ? authUser.profilePicture
+    ? authUser?.profilePicture
     : selectedConversation?.profilePicture;
 
+  const username = fromMe ? authUser?.username : selectedConversation?.username;
+  const formattedMessage =
+    "newMessage" in message ? message.newMessage.message : message.message;
   return (
     <div className="flex flex-col  px-3 mt-6 ">
       <div className="flex items-start gap-2">
@@ -29,11 +46,11 @@ const Message = ({ message }: { message: TMessage }) => {
           />
         </div>
         <div className="flex justify-center gap-2 items-center">
-          <div className="text-white">{authUser?.username}</div>
+          <div className="text-white">{username}</div>
           <div className="opacity-50 text-xs">{formattedDate}</div>
         </div>
       </div>
-      <p className="pl-12">{message.message}</p>
+      <p className="pl-12">{formattedMessage}</p>
     </div>
   );
 };

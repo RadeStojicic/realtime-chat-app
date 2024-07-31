@@ -2,6 +2,7 @@ import { Response } from "express";
 import asyncHandler from "../middleware/async";
 import Conversation from "../models/conversation.model";
 import Message from "../models/message.model";
+import { getReceiverSocketId, io } from "../socket/socket";
 
 export const sendMessage = asyncHandler(async (req, res: Response) => {
   const { message } = req.body;
@@ -30,15 +31,20 @@ export const sendMessage = asyncHandler(async (req, res: Response) => {
 
   await Promise.all([conversation.save(), newMessage.save()]);
 
+  const receiverSocketId = getReceiverSocketId(receiverId);
+  if (receiverSocketId) {
+    io.to(receiverSocketId).emit("newMessage", newMessage);
+  }
+
   res.status(201).json({ newMessage });
 });
 
 export const getMessages = asyncHandler(async (req, res: Response) => {
-  const { id: receiverId } = req.params;
+  const { id: userToChatId } = req.params;
   const senderId = req.user._id;
 
   const conversation = await Conversation.findOne({
-    members: { $all: [senderId, receiverId] },
+    members: { $all: [senderId, userToChatId] },
   }).populate("messages");
 
   if (!conversation) {

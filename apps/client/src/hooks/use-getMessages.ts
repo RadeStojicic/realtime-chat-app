@@ -14,7 +14,6 @@ const useGetMessages = () => {
         .get(`/api/messages/${selectedConversation?._id}`)
         .then((res) => {
           const data = res.data;
-
           if (data.error) {
             throw new Error(data.error);
           }

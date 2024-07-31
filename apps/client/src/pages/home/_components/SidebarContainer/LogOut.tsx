@@ -1,11 +1,15 @@
 import { Button } from "@/components/ui/button";
+import { useAuthContext } from "@/context/AuthContext";
 import useLogout from "@/hooks/use-logout";
 import { LoaderCircle, LogOutIcon } from "lucide-react";
 
 const LogOut = () => {
   const { loading, logout } = useLogout();
+  const { authUser } = useAuthContext();
+
   return (
-    <div className="absolute bottom-0 bg-foreground w-full px-4 py-2">
+    <div className="absolute flex items-center justify-between bottom-0 bg-foreground w-full px-4 py-2">
+      <p className="font-semibold">{authUser?.username}</p>
       {loading ? (
         <Button
           variant="ghost"
@@ -22,7 +26,6 @@ const LogOut = () => {
           variant="ghost"
         >
           <LogOutIcon className="mt-1" size={18} />
-          Log Out
         </Button>
       )}
     </div>
