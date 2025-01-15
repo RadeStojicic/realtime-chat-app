@@ -19,6 +19,7 @@ A modern chat application with real-time messaging, built using the latest web t
    git clone https://github.com/RadeStojicic/realtime-chat-app.git
    cd realtime-chat-app
    ```
+   ```
 
 2. **Setup .env file**:
 
