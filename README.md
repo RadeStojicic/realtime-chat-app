@@ -22,7 +22,7 @@ A modern chat application with real-time messaging, built using the latest web t
 
 2. **Setup .env file**
 
-```bash
+  ```bash
   PORT=...
   MONGO_DB_URI=...
   DB_NAME=...
@@ -31,17 +31,17 @@ A modern chat application with real-time messaging, built using the latest web t
   JWT_EXPIRES_IN=...
   JWT_COOKIE_EXPIRES_IN=...
   NODE_ENV=...
-```
+  ```
 
 3. **Install dependencies**
 
-```bash
+  ```bash
   pnpm install
-```
+  ```
 
 4. **Run the application**
 
-```bash
+  ```bash
   cd /apps
   pnpm dev
-```
+  ```
