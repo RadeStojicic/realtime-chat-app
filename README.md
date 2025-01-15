@@ -20,7 +20,7 @@ A modern chat application with real-time messaging, built using the latest web t
    cd realtime-chat-app
    ```
 
-2. **Setup .env file**
+2. **Setup .env file**:
 
   ```bash
   PORT=...
@@ -33,13 +33,13 @@ A modern chat application with real-time messaging, built using the latest web t
   NODE_ENV=...
   ```
 
-3. **Install dependencies**
+3. **Install dependencies**:
 
   ```bash
   pnpm install
   ```
 
-4. **Run the application**
+4. **Run the application**:
 
   ```bash
   cd /apps
